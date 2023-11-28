@@ -5,8 +5,16 @@ window = tkinter.Tk()
 expression = "" 
 
 def GenerateExpression(num):
-    global expression 
-    expression += str(num) 
+    global expression
+    operations = ['+','-','/','*']
+    if len(expression)>=2:
+        if expression[-2] in operations:
+            if expression[-1] == '0':
+                if str(num) != '.':
+                    expression = expression[:-1] + str(num)
+                    equation.set(expression)
+                    return
+    expression += str(num)
     equation.set(expression) 
 
 def PressedEqual():
@@ -29,57 +37,57 @@ def clear():
 
 window.title('Calculator')
 
-window.geometry('400x600')
+window.geometry('364x550')
 
-# window.resizable(False , True)  -->Window Resizability 
+window.resizable(False , False) # -->Window Resizability 
 
 if __name__ == '__main__':
     window.configure(background="#b5baba")
     equation = tkinter.StringVar()
 
     last_expression_str = tkinter.StringVar()
-    last_expression = tkinter.Entry(window , textvariable = last_expression_str , font=("Arial", 18), justify='left')
-    last_expression.grid(columnspan=10 , ipadx=64 , ipady= 20 , padx=(4,0) , pady=(2,0))
+    last_expression = tkinter.Entry(window , textvariable = last_expression_str , font=("Arial", 18), justify='left', state='disabled')
+    last_expression.grid(columnspan=10 , ipadx=47 , ipady= 20 , padx=(2,0) , pady=(2,0))
 
-    field = tkinter.Entry(window , textvariable = equation , font=("Arial", 18), justify='right')
-    field.grid(columnspan=10 , ipadx=64 , ipady= 20 , padx=(4,0) , pady=(1,4))
+    field = tkinter.Entry(window , textvariable = equation , font=("Arial", 18), justify='right', state="disabled")
+    field.grid(columnspan=10 , ipadx=47 , ipady= 20 , padx=(2,0) , pady=(1,4))
 
     button1 = tkinter.Button(window , text='1', font=("Arial", 15), fg='black', bg='light blue', command=lambda: GenerateExpression(1), height=2, width=7) 
-    button1.grid(row=6, column=0, pady=(0,4))
+    button1.grid(row=6, column=0, pady=(0,4), padx=(1,3))
     button2 = tkinter.Button(window , text='2', font=("Arial", 15), fg='black', bg='light blue', command=lambda: GenerateExpression(2), height=2, width=7) 
-    button2.grid(row=6, column=1, pady=(0,4))
+    button2.grid(row=6, column=1, pady=(0,4), padx=(1,3))
     button3 = tkinter.Button(window , text='3', font=("Arial", 15), fg='black', bg='light blue', command=lambda: GenerateExpression(3), height=2, width=7) 
-    button3.grid(row=6, column=2, pady=(0,4))
+    button3.grid(row=6, column=2, pady=(0,4), padx=(1,3))
     button4 = tkinter.Button(window , text='4', font=("Arial", 15), fg='black', bg='light blue', command=lambda: GenerateExpression(4), height=2, width=7) 
-    button4.grid(row=5, column=0, pady=(0,4))
+    button4.grid(row=5, column=0, pady=(0,4), padx=(1,3))
     button5 = tkinter.Button(window , text='5', font=("Arial", 15), fg='black', bg='light blue', command=lambda: GenerateExpression(5), height=2, width=7) 
-    button5.grid(row=5, column=1, pady=(0,4))
+    button5.grid(row=5, column=1, pady=(0,4), padx=(1,3))
     button6 = tkinter.Button(window , text='6', font=("Arial", 15), fg='black', bg='light blue', command=lambda: GenerateExpression(6), height=2, width=7) 
-    button6.grid(row=5, column=2, pady=(0,4))
+    button6.grid(row=5, column=2, pady=(0,4), padx=(1,3))
     button7 = tkinter.Button(window , text='7', font=("Arial", 15), fg='black', bg='light blue', command=lambda: GenerateExpression(7), height=2, width=7) 
-    button7.grid(row=4, column=0, pady=(0,4))
+    button7.grid(row=4, column=0, pady=(0,4), padx=(1,3))
     button8 = tkinter.Button(window , text='8', font=("Arial", 15), fg='black', bg='light blue', command=lambda: GenerateExpression(8), height=2, width=7) 
-    button8.grid(row=4, column=1, pady=(0,4))
+    button8.grid(row=4, column=1, pady=(0,4), padx=(1,3))
     button9 = tkinter.Button(window , text='9', font=("Arial", 15), fg='black', bg='light blue', command=lambda: GenerateExpression(9), height=2, width=7) 
-    button9.grid(row=4, column=2, pady=(0,4))
+    button9.grid(row=4, column=2, pady=(0,4), padx=(1,3))
     button0 = tkinter.Button(window , text='0', font=("Arial", 15), fg='black', bg='light blue', command=lambda: GenerateExpression(0), height=2, width=7) 
-    button0.grid(row=7, column=1, pady=(0,4))
+    button0.grid(row=7, column=1, pady=(0,4), padx=(1,3))
     buttondot = tkinter.Button(window , text='.', font=("Arial", 15), fg='black', bg='light blue', command=lambda: GenerateExpression('.'), height=2, width=7)
-    buttondot.grid(row=7, column=0, pady=(0,4))
+    buttondot.grid(row=7, column=0, pady=(0,4), padx=(1,3))
     buttonplus = tkinter.Button(window , text='+', font=("Arial", 15), fg='black', bg='light blue', command=lambda: GenerateExpression('+'), height=2, width=7)
-    buttonplus.grid(row=6, column=3, pady=(0,4))
+    buttonplus.grid(row=6, column=3, pady=(0,4), padx=(1,3))
     buttonminus = tkinter.Button(window , text='-', font=("Arial", 15), fg='black', bg='light blue', command=lambda: GenerateExpression('-'), height=2, width=7)
-    buttonminus.grid(row=5, column=3, pady=(0,4))
+    buttonminus.grid(row=5, column=3, pady=(0,4), padx=(1,3))
     buttonmult = tkinter.Button(window , text='x', font=("Arial", 15), fg='black', bg='light blue', command=lambda: GenerateExpression('*'), height=2, width=7)
-    buttonmult.grid(row=4, column=3, pady=(0,4))
+    buttonmult.grid(row=4, column=3, pady=(0,4), padx=(1,3))
     buttondiv = tkinter.Button(window , text='/', font=("Arial", 15), fg='black', bg='light blue', command=lambda: GenerateExpression('/'), height=2, width=7)
-    buttondiv.grid(row=3, column=3, pady=(0,4))
+    buttondiv.grid(row=3, column=3, pady=(0,4), padx=(1,3))
     buttonmod = tkinter.Button(window , text='%', font=("Arial", 15), fg='black', bg='light blue', command=lambda: GenerateExpression('%'), height=2, width=7)
-    buttonmod.grid(row=2, column=3, pady=(0,4))
+    buttonmod.grid(row=2, column=3, pady=(0,4), padx=(1,3))
     buttonequal = tkinter.Button(window , text='=', font=("Arial", 15), fg='black', bg='light blue', command=PressedEqual, height=2, width=7)
-    buttonequal.grid(row=7, column=3, pady=(0,4))
+    buttonequal.grid(row=7, column=3, pady=(0,4), padx=(1,3))
     buttonclear = tkinter.Button(window , text='C', font=("Arial", 15), fg='black', bg='light blue', command=clear , height=2, width=7)
-    buttonclear.grid(row=7, column=2, pady=(0,4))
+    buttonclear.grid(row=7, column=2, pady=(0,4), padx=(1,3))
     
     window.mainloop()
 
