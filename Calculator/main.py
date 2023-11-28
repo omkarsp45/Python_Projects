@@ -6,6 +6,15 @@ expression = ""
 
 def GenerateExpression(num):
     global expression
+    if len(expression)==1:
+        if expression[0] == '0' and str(num)=='.':
+            expression = '0.'
+            equation.set(expression)
+            return
+        elif expression[0] == '0':
+            expression = str(num)    
+            equation.set(expression) 
+            return    
     operations = ['+','-','/','*']
     if len(expression)>=2:
         if expression[-2] in operations:
@@ -14,6 +23,9 @@ def GenerateExpression(num):
                     expression = expression[:-1] + str(num)
                     equation.set(expression)
                     return
+    if len(expression)>=1:                
+        if expression[-1] == '.' and str(num)== '.':
+            return            
     expression += str(num)
     equation.set(expression) 
 
@@ -39,7 +51,7 @@ window.title('Calculator')
 
 window.geometry('364x550')
 
-window.resizable(False , False) # -->Window Resizability 
+window.resizable(False , False)
 
 if __name__ == '__main__':
     window.configure(background="#b5baba")
