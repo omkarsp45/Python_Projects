@@ -12,8 +12,8 @@ def GenerateExpression(num):
             equation.set(expression)
             return
         elif expression[0] == '0':
-            expression = str(num)    
-            equation.set(expression) 
+            expression = str(num)
+            equation.set(expression)
             return    
     operations = ['+','-','/','*']
     if len(expression)>=2:
@@ -27,7 +27,12 @@ def GenerateExpression(num):
         if expression[-1] == '.' and str(num)== '.':
             return            
     expression += str(num)
-    equation.set(expression) 
+    equation.set(expression)
+
+def clearLastEntryInExpression():
+    global expression
+    expression = expression[:-1]
+    equation.set(expression)
 
 def PressedEqual():
     try:
@@ -41,29 +46,23 @@ def PressedEqual():
         last_expression_str.set("")  
         expression = ""
 
+switcher = True
+
 def clear():
     global expression 
     expression = ""        
     equation.set("")
     last_expression_str.set("")
 
-window.title('Calculator')
+def switchBool():
+    global switcher 
+    if switcher == True:
+        switcher = False
+    else:
+        switcher = True  
+    drawButtons()      
 
-window.geometry('364x550')
-
-window.resizable(False , False)
-
-if __name__ == '__main__':
-    window.configure(background="#b5baba")
-    equation = tkinter.StringVar()
-
-    last_expression_str = tkinter.StringVar()
-    last_expression = tkinter.Entry(window , textvariable = last_expression_str , font=("Arial", 18), justify='left', state='disabled')
-    last_expression.grid(columnspan=10 , ipadx=47 , ipady= 20 , padx=(2,0) , pady=(2,0))
-
-    field = tkinter.Entry(window , textvariable = equation , font=("Arial", 18), justify='right', state="disabled")
-    field.grid(columnspan=10 , ipadx=47 , ipady= 20 , padx=(2,0) , pady=(1,4))
-
+def drawButtons():
     button1 = tkinter.Button(window , text='1', font=("Arial", 15), fg='black', bg='light blue', command=lambda: GenerateExpression(1), height=2, width=7) 
     button1.grid(row=6, column=0, pady=(0,4), padx=(1,3))
     button2 = tkinter.Button(window , text='2', font=("Arial", 15), fg='black', bg='light blue', command=lambda: GenerateExpression(2), height=2, width=7) 
@@ -87,20 +86,64 @@ if __name__ == '__main__':
     buttondot = tkinter.Button(window , text='.', font=("Arial", 15), fg='black', bg='light blue', command=lambda: GenerateExpression('.'), height=2, width=7)
     buttondot.grid(row=7, column=0, pady=(0,4), padx=(1,3))
     buttonplus = tkinter.Button(window , text='+', font=("Arial", 15), fg='black', bg='light blue', command=lambda: GenerateExpression('+'), height=2, width=7)
-    buttonplus.grid(row=6, column=3, pady=(0,4), padx=(1,3))
+    buttonplus.grid(row=5, column=3, pady=(0,4), padx=(1,3))
     buttonminus = tkinter.Button(window , text='-', font=("Arial", 15), fg='black', bg='light blue', command=lambda: GenerateExpression('-'), height=2, width=7)
-    buttonminus.grid(row=5, column=3, pady=(0,4), padx=(1,3))
-    buttonmult = tkinter.Button(window , text='x', font=("Arial", 15), fg='black', bg='light blue', command=lambda: GenerateExpression('*'), height=2, width=7)
-    buttonmult.grid(row=4, column=3, pady=(0,4), padx=(1,3))
-    buttondiv = tkinter.Button(window , text='/', font=("Arial", 15), fg='black', bg='light blue', command=lambda: GenerateExpression('/'), height=2, width=7)
-    buttondiv.grid(row=3, column=3, pady=(0,4), padx=(1,3))
-    buttonmod = tkinter.Button(window , text='%', font=("Arial", 15), fg='black', bg='light blue', command=lambda: GenerateExpression('%'), height=2, width=7)
-    buttonmod.grid(row=2, column=3, pady=(0,4), padx=(1,3))
+    buttonminus.grid(row=4, column=3, pady=(0,4), padx=(1,3))
     buttonequal = tkinter.Button(window , text='=', font=("Arial", 15), fg='black', bg='light blue', command=PressedEqual, height=2, width=7)
-    buttonequal.grid(row=7, column=3, pady=(0,4), padx=(1,3))
+    buttonequal.grid(row=6, column=3, pady=(0,4), padx=(1,3))
     buttonclear = tkinter.Button(window , text='C', font=("Arial", 15), fg='black', bg='light blue', command=clear , height=2, width=7)
     buttonclear.grid(row=7, column=2, pady=(0,4), padx=(1,3))
-    
+    clearOne = tkinter.Button(window , text="DEL", font=("Arial", 15), fg='black', bg='light blue', command=clearLastEntryInExpression , height=2, width=7)
+    clearOne.grid(row=7, column=3, pady=(0,4), padx=(1,3))
+    switch = tkinter.Button(window , text="Switch" , font=("Arial", 15), fg='black', bg='light blue', command = switchBool, height=2, width=7)
+    switch.grid(row=2, column=0, pady=(0,4), padx=(1,3))
+    if switcher:
+        Xsquare = tkinter.Button(window, text="x²", font=("Arial", 15), fg='black', bg='light blue', command=clear, height=2, width=7)
+        Xsquare.grid(row=2, column=1, pady=(0,4), padx=(1,3))
+        squareRoot = tkinter.Button(window, text="√x", font=("Arial", 15), fg='black', bg='light blue', command=clear, height=2, width=7)
+        squareRoot.grid(row=2, column=2, pady=(0,4), padx=(1,3))
+        oneByX = tkinter.Button(window, text="1/x", font=("Arial", 15), fg='black', bg='light blue', command=clear, height=2, width=7)
+        oneByX.grid(row=2, column=3, pady=(0,4), padx=(1,3))
+        xRaiseY = tkinter.Button(window, text="x^y", font=("Arial", 15), fg='black', bg='light blue', command=clear, height=2, width=7)
+        xRaiseY.grid(row=3, column=0, pady=(0,4), padx=(1,3))
+        buttonmult = tkinter.Button(window, text='*', font=("Arial", 15), fg='black', bg='light blue', command=clear , height=2, width=7)
+        buttonmult.grid(row=3, column=3, pady=(0,4), padx=(1,3))
+        buttondiv = tkinter.Button(window, text='/', font=("Arial", 15), fg='black', bg='light blue', command=clear, height=2, width=7)
+        buttondiv.grid(row=3, column=2, pady=(0,4), padx=(1,3))
+        buttonmod = tkinter.Button(window, text='mod', font=("Arial", 15), fg='black', bg='light blue', command=clear, height=2, width=7)
+        buttonmod.grid(row=3, column=1, pady=(0,4), padx=(1,3))
+    else:
+        sin = tkinter.Button(window, text="sin", font=("Arial", 15), fg='black', bg='light blue', command=clear, height=2, width=7)
+        sin.grid(row=2, column=1, pady=(0,4), padx=(1,3))
+        cos = tkinter.Button(window, text="cos", font=("Arial", 15), fg='black', bg='light blue', command=clear, height=2, width=7)
+        cos.grid(row=2, column=2, pady=(0,4), padx=(1,3))
+        tan = tkinter.Button(window, text="tan", font=("Arial", 15), fg='black', bg='light blue', command=clear, height=2, width=7)
+        tan.grid(row=2, column=3, pady=(0,4), padx=(1,3))
+        log = tkinter.Button(window, text="log", font=("Arial", 15), fg='black', bg='light blue', command=clear, height=2, width=7)
+        log.grid(row=3, column=0, pady=(0,4), padx=(1,3))
+        ln = tkinter.Button(window, text='ln', font=("Arial", 15), fg='black', bg='light blue', command=clear, height=2, width=7)
+        ln.grid(row=3, column=1, pady=(0,4), padx=(1,3))
+
+
+window.title('Calculator')
+
+window.geometry('364x550')
+
+window.resizable(False , False)
+
+if __name__ == '__main__':
+    window.configure(background="#b5baba")
+    equation = tkinter.StringVar()
+
+    last_expression_str = tkinter.StringVar()
+    last_expression = tkinter.Entry(window , textvariable = last_expression_str , font=("Arial", 18), justify='left', state='disabled')
+    last_expression.grid(columnspan=10 , ipadx=46 , ipady= 20 , padx=(0,0) , pady=(2,0))
+
+    field = tkinter.Entry(window , textvariable = equation , font=("Arial", 18), justify='right', state="disabled")
+    field.grid(columnspan=10 , ipadx=46 , ipady= 20 , padx=(0,0) , pady=(1,4))
+
+    drawButtons()
+
     window.mainloop()
 
     
