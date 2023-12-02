@@ -1,4 +1,5 @@
 import tkinter 
+from operations import cleanExpression
 
 window = tkinter.Tk()
 
@@ -6,6 +7,7 @@ expression = ""
 
 def GenerateExpression(num):
     global expression
+    expression = cleanExpression(expression)
     if len(expression)==1:
         if expression[0] == '0' and str(num)=='.':
             expression = '0.'
@@ -36,11 +38,14 @@ def clearLastEntryInExpression():
 
 def PressedEqual():
     try:
-        global expression 
+        global expression
+        expression = cleanExpression(expression)
         res = str(eval(expression))
         last_expression_str.set(expression)
         equation.set(res)
         expression = str(res)
+    except ZeroDivisionError:
+        equation.set("Error: Division By Zero")
     except:
         equation.set("Error Occured")  
         last_expression_str.set("")  
@@ -98,38 +103,39 @@ def drawButtons():
     switch = tkinter.Button(window , text="Switch" , font=("Arial", 15), fg='black', bg='light blue', command = switchBool, height=2, width=7)
     switch.grid(row=2, column=0, pady=(0,4), padx=(1,3))
     if switcher:
-        Xsquare = tkinter.Button(window, text="x²", font=("Arial", 15), fg='black', bg='light blue', command=clear, height=2, width=7)
+        Xsquare = tkinter.Button(window, text="x²", font=("Arial", 15), fg='black', bg='light blue', command=lambda: GenerateExpression('sq'), height=2, width=7)
         Xsquare.grid(row=2, column=1, pady=(0,4), padx=(1,3))
-        squareRoot = tkinter.Button(window, text="√x", font=("Arial", 15), fg='black', bg='light blue', command=clear, height=2, width=7)
+        squareRoot = tkinter.Button(window, text="√x", font=("Arial", 15), fg='black', bg='light blue', command=lambda: GenerateExpression('sqrt'), height=2, width=7)
         squareRoot.grid(row=2, column=2, pady=(0,4), padx=(1,3))
-        oneByX = tkinter.Button(window, text="1/x", font=("Arial", 15), fg='black', bg='light blue', command=clear, height=2, width=7)
+        oneByX = tkinter.Button(window, text="1/x", font=("Arial", 15), fg='black', bg='light blue', command=lambda: GenerateExpression('byOne'), height=2, width=7)
         oneByX.grid(row=2, column=3, pady=(0,4), padx=(1,3))
-        xRaiseY = tkinter.Button(window, text="x^y", font=("Arial", 15), fg='black', bg='light blue', command=clear, height=2, width=7)
+        xRaiseY = tkinter.Button(window, text="x^y", font=("Arial", 15), fg='black', bg='light blue', command=lambda: GenerateExpression('^'), height=2, width=7)
         xRaiseY.grid(row=3, column=0, pady=(0,4), padx=(1,3))
-        buttonmult = tkinter.Button(window, text='*', font=("Arial", 15), fg='black', bg='light blue', command=clear , height=2, width=7)
+        buttonmult = tkinter.Button(window, text='*', font=("Arial", 15), fg='black', bg='light blue', command=lambda: GenerateExpression('*') , height=2, width=7)
         buttonmult.grid(row=3, column=3, pady=(0,4), padx=(1,3))
-        buttondiv = tkinter.Button(window, text='/', font=("Arial", 15), fg='black', bg='light blue', command=clear, height=2, width=7)
+        buttondiv = tkinter.Button(window, text='/', font=("Arial", 15), fg='black', bg='light blue', command=lambda: GenerateExpression('/'), height=2, width=7)
         buttondiv.grid(row=3, column=2, pady=(0,4), padx=(1,3))
-        buttonmod = tkinter.Button(window, text='mod', font=("Arial", 15), fg='black', bg='light blue', command=clear, height=2, width=7)
+        buttonmod = tkinter.Button(window, text='mod', font=("Arial", 15), fg='black', bg='light blue', command=lambda: GenerateExpression('%'), height=2, width=7)
         buttonmod.grid(row=3, column=1, pady=(0,4), padx=(1,3))
     else:
-        sin = tkinter.Button(window, text="sin", font=("Arial", 15), fg='black', bg='light blue', command=clear, height=2, width=7)
+        sin = tkinter.Button(window, text="sin", font=("Arial", 15), fg='black', bg='light blue', command=lambda: GenerateExpression('sin('), height=2, width=7)
         sin.grid(row=2, column=1, pady=(0,4), padx=(1,3))
-        cos = tkinter.Button(window, text="cos", font=("Arial", 15), fg='black', bg='light blue', command=clear, height=2, width=7)
+        cos = tkinter.Button(window, text="cos", font=("Arial", 15), fg='black', bg='light blue', command=lambda: GenerateExpression('cos('), height=2, width=7)
         cos.grid(row=2, column=2, pady=(0,4), padx=(1,3))
-        tan = tkinter.Button(window, text="tan", font=("Arial", 15), fg='black', bg='light blue', command=clear, height=2, width=7)
+        tan = tkinter.Button(window, text="tan", font=("Arial", 15), fg='black', bg='light blue', command=lambda: GenerateExpression('tan('), height=2, width=7)
         tan.grid(row=2, column=3, pady=(0,4), padx=(1,3))
-        log = tkinter.Button(window, text="log", font=("Arial", 15), fg='black', bg='light blue', command=clear, height=2, width=7)
+        log = tkinter.Button(window, text="log", font=("Arial", 15), fg='black', bg='light blue', command=lambda: GenerateExpression('log('), height=2, width=7)
         log.grid(row=3, column=0, pady=(0,4), padx=(1,3))
-        ln = tkinter.Button(window, text='ln', font=("Arial", 15), fg='black', bg='light blue', command=clear, height=2, width=7)
+        ln = tkinter.Button(window, text='ln', font=("Arial", 15), fg='black', bg='light blue', command=lambda: GenerateExpression('ln('), height=2, width=7)
         ln.grid(row=3, column=1, pady=(0,4), padx=(1,3))
-
+        buttonmult = tkinter.Button(window, text='(', font=("Arial", 15), fg='black', bg='light blue', command=lambda: GenerateExpression('(') , height=2, width=7)
+        buttonmult.grid(row=3, column=2, pady=(0,4), padx=(1,3))
+        buttondiv = tkinter.Button(window, text=')', font=("Arial", 15), fg='black', bg='light blue', command=lambda: GenerateExpression(')') , height=2, width=7)
+        buttondiv.grid(row=3, column=3, pady=(0,4), padx=(1,3))
 
 window.title('Calculator')
 
 window.geometry('364x550')
-
-window.resizable(False , False)
 
 if __name__ == '__main__':
     window.configure(background="#b5baba")
@@ -146,4 +152,3 @@ if __name__ == '__main__':
 
     window.mainloop()
 
-    
